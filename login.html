@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+        }
+        .login-container {
+            width: 300px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"],
+        input[type="password"],
+        input[type="checkbox"],
+        input[type="submit"] {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            background-color: #1877f2;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #166fe5;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Facebook Login</h2>
+        <form id="loginForm" onsubmit="return validateForm()">
+            <input type="text" id="username" name="username" placeholder="Username" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <label><input type="checkbox" id="rememberMe"> Remember Me</label>
+            <input type="submit" value="Login">
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            // Retrieve values from form inputs
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+
+            // Input validation
+            if (username.trim() === "" || password.trim() === "") {
+                alert("Username and password are required.");
+                return false;
+            }
+
+            // Sanitize inputs to prevent XSS attacks
+            username = sanitizeInput(username);
+            password = sanitizeInput(password);
+
+            // Additional security measures (e.g., WAF, CSRF token validation, password complexity requirements) can be added here
+
+            // Proceed with form submission
+            return true;
+        }
+
+        // Function to sanitize user inputs to prevent XSS attacks
+        function sanitizeInput(input) {
+            return input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+    </script>
+</body>
+</html>
